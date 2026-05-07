@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # contacts_app
 
 Simple Google Contacts style Flutter app (foundation only).
@@ -31,3 +32,6 @@ CRUD is not implemented yet.
 - Home has a simple bottom navigation (Contacts / Favorites).
 - Tap a contact to open the details screen (call, edit, delete, favorite).
 - SQLite CRUD is implemented (add/edit/delete/favorite).
+=======
+# contacts_app
+>>>>>>> 1611f6d1c5427cf83b7dd12322cd5ef6ec89d941
