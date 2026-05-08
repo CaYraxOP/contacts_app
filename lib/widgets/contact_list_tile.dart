@@ -24,19 +24,7 @@ class ContactListTile extends StatelessWidget {
     final theme = Theme.of(context);
     final subtitle = contact.phone ?? contact.email ?? '';
 
-    return TweenAnimationBuilder<double>(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 220),
-      curve: Curves.easeOutCubic,
-      builder: (context, t, child) {
-        return Opacity(
-          opacity: t,
-          child: Transform.translate(
-            offset: Offset(0, (1 - t) * 6),
-            child: child,
-          ),
-        );
-      },
+    return RepaintBoundary(
       child: Material(
         color: theme.colorScheme.surfaceContainerLow,
         elevation: 0.4,
@@ -77,10 +65,22 @@ class ContactListTile extends StatelessWidget {
                 tooltip: contact.isFavorite ? 'Unfavorite' : 'Favorite',
                 onPressed: onToggleFavorite,
                 icon: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
+                  duration: const Duration(milliseconds: 180),
+                  transitionBuilder: (child, animation) {
+                    return ScaleTransition(
+                      scale: CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutBack,
+                      ),
+                      child: FadeTransition(opacity: animation, child: child),
+                    );
+                  },
                   child: Icon(
                     contact.isFavorite ? Icons.star : Icons.star_outline,
                     key: ValueKey<bool>(contact.isFavorite),
+                    color: contact.isFavorite
+                        ? theme.colorScheme.primary
+                        : null,
                   ),
                 ),
               ),

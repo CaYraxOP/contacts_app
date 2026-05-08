@@ -4,11 +4,7 @@ import 'package:get/get.dart';
 import '../core/utils/loading_controller.dart';
 
 class LoadingOverlay extends StatelessWidget {
-  const LoadingOverlay({
-    super.key,
-    required this.child,
-    this.controllerTag,
-  });
+  const LoadingOverlay({super.key, required this.child, this.controllerTag});
 
   final Widget child;
   final String? controllerTag;

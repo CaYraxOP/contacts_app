@@ -11,6 +11,8 @@ class AppController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await _contactsService.warmUp();
+    if (!Get.testMode) {
+      await _contactsService.seedDemoContactsIfEmpty(count: 25);
+    }
   }
 }
-

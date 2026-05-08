@@ -42,4 +42,3 @@ class BrandMark extends StatelessWidget {
     );
   }
 }
-

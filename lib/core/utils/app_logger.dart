@@ -14,4 +14,3 @@ class AppLogger {
     if (stackTrace != null) debugPrint('    stack: $stackTrace');
   }
 }
-

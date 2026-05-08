@@ -10,10 +10,6 @@ class AppColors {
   }
 
   static ColorScheme darkScheme() {
-    return ColorScheme.fromSeed(
-      seedColor: seed,
-      brightness: Brightness.dark,
-    );
+    return ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark);
   }
 }
-

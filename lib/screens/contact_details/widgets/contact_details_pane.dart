@@ -14,10 +14,7 @@ import '../../../services/phone_dialer_service.dart';
 import 'contact_info_widgets.dart';
 
 class ContactDetailsPane extends StatelessWidget {
-  const ContactDetailsPane({
-    super.key,
-    required this.contactId,
-  });
+  const ContactDetailsPane({super.key, required this.contactId});
 
   final int? contactId;
 
@@ -25,16 +22,16 @@ class ContactDetailsPane extends StatelessWidget {
   Widget build(BuildContext context) {
     final contactsController = Get.find<ContactsController>();
     final dialer = Get.find<PhoneDialerService>();
+    final id = contactId;
+
+    if (id == null) {
+      return const EmptyState(
+        title: 'Select a contact',
+        subtitle: 'Pick a contact from the list to see details here.',
+      );
+    }
 
     return Obx(() {
-      final id = contactId;
-      if (id == null) {
-        return const EmptyState(
-          title: 'Select a contact',
-          subtitle: 'Pick a contact from the list to see details here.',
-        );
-      }
-
       Contact? contact;
       try {
         contact = contactsController.contacts.firstWhere((c) => c.id == id);
@@ -59,27 +56,29 @@ class ContactDetailsPane extends StatelessWidget {
           bottom: false,
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: Responsive.isTablet(context) ? 720 : double.infinity,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Hero(
-                        tag: 'avatar_${c.id ?? c.name}',
-                        child: ContactAvatar(
-                          fallbackText: c.name,
-                          photoPath: c.imagePath,
-                          radius: 28,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: Responsive.isTablet(context)
+                      ? 720
+                      : double.infinity,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Hero(
+                          tag: 'avatar_${c.id ?? c.name}',
+                          child: ContactAvatar(
+                            fallbackText: c.name,
+                            photoPath: c.imagePath,
+                            radius: 28,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(
+                        const SizedBox(width: AppSpacing.md),
+                        Expanded(
                           child: Text(
-                          c.name,
+                            c.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.titleLarge?.copyWith(
@@ -89,19 +88,23 @@ class ContactDetailsPane extends StatelessWidget {
                         ),
                         IconButton(
                           tooltip: 'Call',
-                        onPressed: (c.phone ?? '').trim().isEmpty
-                            ? null
-                            : () async {
-                                final ok = await dialer.dial(c.phone!);
-                                if (!ok) {
-                                  AppSnackbar.show('Call failed', 'Could not open the dialer.');
-                                }
-                              },
+                          onPressed: (c.phone ?? '').trim().isEmpty
+                              ? null
+                              : () async {
+                                  final ok = await dialer.dial(c.phone!);
+                                  if (!ok) {
+                                    AppSnackbar.show(
+                                      'Call failed',
+                                      'Could not open the dialer.',
+                                    );
+                                  }
+                                },
                           icon: const Icon(Icons.call_outlined),
                         ),
                         IconButton(
                           tooltip: c.isFavorite ? 'Unfavorite' : 'Favorite',
-                          onPressed: () => contactsController.setFavorite(c, !c.isFavorite),
+                          onPressed: () =>
+                              contactsController.setFavorite(c, !c.isFavorite),
                           icon: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 150),
                             child: Icon(
@@ -123,26 +126,26 @@ class ContactDetailsPane extends StatelessWidget {
                           },
                           icon: const Icon(Icons.edit_outlined),
                         ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Expanded(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.surfaceContainerLow,
-                        borderRadius: AppRadii.lg,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: AppRadii.lg,
-                        child: _ContactDetailsInfo(contact: c),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surfaceContainerLow,
+                          borderRadius: AppRadii.lg,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: AppRadii.lg,
+                          child: _ContactDetailsInfo(contact: c),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
         ),
       );
     });
@@ -183,12 +186,10 @@ class _ContactDetailsInfo extends StatelessWidget {
         ],
         if ((contact.notes ?? '').trim().isNotEmpty) ...<Widget>[
           const SizedBox(height: AppSpacing.md),
-          ContactInfoBlock(
-            title: 'Notes',
-            value: contact.notes!,
-          ),
+          ContactInfoBlock(title: 'Notes', value: contact.notes!),
         ],
       ],
     );
   }
 }
+

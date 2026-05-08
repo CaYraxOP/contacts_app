@@ -13,6 +13,9 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.onChanged,
+    this.onSubmitted,
+    this.errorText,
+    this.textCapitalization = TextCapitalization.none,
     this.obscureText = false,
     this.enabled = true,
     this.autofocus = false,
@@ -29,6 +32,9 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final String? errorText;
+  final TextCapitalization textCapitalization;
   final bool obscureText;
   final bool enabled;
   final bool autofocus;
@@ -45,20 +51,19 @@ class AppTextField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       onChanged: onChanged,
+      onSubmitted: onSubmitted,
+      textCapitalization: textCapitalization,
       maxLines: obscureText ? 1 : maxLines,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
+        errorText: errorText,
         prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
         suffixIcon: suffixIcon == null
             ? null
-            : IconButton(
-                onPressed: onSuffixTap,
-                icon: Icon(suffixIcon),
-              ),
+            : IconButton(onPressed: onSuffixTap, icon: Icon(suffixIcon)),
         border: const OutlineInputBorder(),
       ),
     );
   }
 }
-

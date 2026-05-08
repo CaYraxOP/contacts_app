@@ -18,9 +18,14 @@ class ContactAvatar extends StatelessWidget {
     final text = fallbackText.trim();
     if (text.isEmpty) return '?';
 
-    final parts = text.split(RegExp(r'\\s+')).where((p) => p.isNotEmpty).toList();
+    final parts = text
+        .split(RegExp(r'\\s+'))
+        .where((p) => p.isNotEmpty)
+        .toList();
     final first = parts.first.isEmpty ? '' : parts.first.substring(0, 1);
-    final second = (parts.length > 1 && parts[1].isNotEmpty) ? parts[1].substring(0, 1) : '';
+    final second = (parts.length > 1 && parts[1].isNotEmpty)
+        ? parts[1].substring(0, 1)
+        : '';
 
     final out = (first + second).toUpperCase();
     return out.isEmpty ? '?' : out;
@@ -34,7 +39,8 @@ class ContactAvatar extends StatelessWidget {
     final bg = _fallbackBackground(theme, fallbackText);
 
     return Semantics(
-      label: 'Avatar for ${fallbackText.trim().isEmpty ? 'contact' : fallbackText.trim()}',
+      label:
+          'Avatar for ${fallbackText.trim().isEmpty ? 'contact' : fallbackText.trim()}',
       image: true,
       child: CircleAvatar(
         radius: radius,
@@ -47,14 +53,15 @@ class ContactAvatar extends StatelessWidget {
                 ? Image.file(
                     File(path),
                     fit: BoxFit.cover,
-                    frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                      if (wasSynchronouslyLoaded) return child;
-                      return AnimatedOpacity(
-                        opacity: frame == null ? 0 : 1,
-                        duration: const Duration(milliseconds: 180),
-                        child: child,
-                      );
-                    },
+                    frameBuilder:
+                        (context, child, frame, wasSynchronouslyLoaded) {
+                          if (wasSynchronouslyLoaded) return child;
+                          return AnimatedOpacity(
+                            opacity: frame == null ? 0 : 1,
+                            duration: const Duration(milliseconds: 180),
+                            child: child,
+                          );
+                        },
                     errorBuilder: (context, error, stackTrace) => _Fallback(
                       initials: _initials,
                       radius: radius,
@@ -88,7 +95,9 @@ class _Fallback extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final brightness = ThemeData.estimateBrightnessForColor(backgroundColor);
-    final textColor = brightness == Brightness.dark ? Colors.white : Colors.black;
+    final textColor = brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
     return ColoredBox(
       color: backgroundColor,
       child: Center(
@@ -109,7 +118,10 @@ Color _fallbackBackground(ThemeData theme, String name) {
   if (n.isEmpty) return theme.colorScheme.surfaceContainerHighest;
 
   // Deterministic "random" color based on the contact name (stable across rebuilds).
-  final hash = n.codeUnits.fold<int>(0, (acc, c) => (acc * 31 + c) & 0x7fffffff);
+  final hash = n.codeUnits.fold<int>(
+    0,
+    (acc, c) => (acc * 31 + c) & 0x7fffffff,
+  );
   final hue = (hash % 360).toDouble();
 
   final isDark = theme.brightness == Brightness.dark;

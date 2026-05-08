@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../core/constants/app_constants.dart';
 import '../core/utils/app_logger.dart';
+import '../core/utils/phone_utils.dart';
 import 'db_schema.dart';
 
 class AppDatabase {
@@ -35,6 +36,9 @@ class AppDatabase {
         if (oldVersion < 2) {
           await _migrateV1ToV2(db);
         }
+        if (oldVersion < 3) {
+          await _migrateV2ToV3(db);
+        }
       },
     );
   }
@@ -65,8 +69,40 @@ FROM ${DbSchema.contactsTable}
 ''');
 
       await txn.execute('DROP TABLE ${DbSchema.contactsTable}');
-      await txn.execute('ALTER TABLE contacts_new RENAME TO ${DbSchema.contactsTable}');
+      await txn.execute(
+        'ALTER TABLE contacts_new RENAME TO ${DbSchema.contactsTable}',
+      );
     });
+  }
+
+  Future<void> _migrateV2ToV3(Database db) async {
+    // Add phone_norm column for fast duplicate detection.
+    await db.execute(
+      'ALTER TABLE ${DbSchema.contactsTable} ADD COLUMN ${DbSchema.phoneNormColumn} TEXT',
+    );
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_contacts_phone_norm ON ${DbSchema.contactsTable}(${DbSchema.phoneNormColumn})',
+    );
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_contacts_name ON ${DbSchema.contactsTable}(name)',
+    );
+
+    final rows = await db.query(
+      DbSchema.contactsTable,
+      columns: <String>['id', 'phone'],
+    );
+    for (final row in rows) {
+      final id = row['id'] as int?;
+      if (id == null) continue;
+      final phone = row['phone'] as String? ?? '';
+      final norm = PhoneUtils.normalizeForDuplicate(phone);
+      await db.update(
+        DbSchema.contactsTable,
+        <String, Object?>{DbSchema.phoneNormColumn: norm.isEmpty ? null : norm},
+        where: 'id = ?',
+        whereArgs: <Object?>[id],
+      );
+    }
   }
 
   Future<void> close() async {

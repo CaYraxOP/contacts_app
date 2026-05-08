@@ -12,4 +12,3 @@ class AppBranding {
 
   static Color get seed => AppColors.seed;
 }
-

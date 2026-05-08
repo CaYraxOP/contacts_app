@@ -23,10 +23,7 @@ class AppPages {
       page: () => const HomeScreen(),
       binding: HomeBinding(),
     ),
-    GetPage(
-      name: AppRoutes.favorites,
-      page: () => const FavoritesScreen(),
-    ),
+    GetPage(name: AppRoutes.favorites, page: () => const FavoritesScreen()),
     GetPage(
       name: AppRoutes.contactDetails,
       page: () => const ContactDetailsScreen(),

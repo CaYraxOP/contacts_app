@@ -8,4 +8,3 @@ class AppStrings {
   static const String emptyContactsSubtitle =
       'CRUD is intentionally not implemented in this foundation.';
 }
-

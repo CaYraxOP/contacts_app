@@ -16,11 +16,17 @@ class AppBinding extends Bindings {
       () => ContactsService(Get.find<AppDatabase>()),
       fenix: true,
     );
-    Get.lazyPut<PhoneDialerService>(() => const PhoneDialerService(), fenix: true);
+    Get.lazyPut<PhoneDialerService>(
+      () => const PhoneDialerService(),
+      fenix: true,
+    );
     Get.put<ContactsController>(
       ContactsController(Get.find<ContactsService>()),
       permanent: true,
     );
-    Get.put<AppController>(AppController(Get.find<ContactsService>()), permanent: true);
+    Get.put<AppController>(
+      AppController(Get.find<ContactsService>()),
+      permanent: true,
+    );
   }
 }

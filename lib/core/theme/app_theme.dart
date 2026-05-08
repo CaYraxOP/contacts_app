@@ -31,7 +31,9 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         border: const OutlineInputBorder(),
         filled: true,
-        fillColor: base.colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
+        fillColor: base.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.6,
+        ),
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: 1,
@@ -66,7 +68,9 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         border: const OutlineInputBorder(),
         filled: true,
-        fillColor: base.colorScheme.surfaceContainerHighest.withValues(alpha: 0.25),
+        fillColor: base.colorScheme.surfaceContainerHighest.withValues(
+          alpha: 0.25,
+        ),
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         elevation: 1,

@@ -22,7 +22,8 @@ class SplashScreen extends GetView<SplashController> {
               tween: Tween<double>(begin: 0.92, end: 1),
               duration: const Duration(milliseconds: 550),
               curve: Curves.easeOutCubic,
-              builder: (context, t, child) => Transform.scale(scale: t, child: child),
+              builder: (context, t, child) =>
+                  Transform.scale(scale: t, child: child),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[

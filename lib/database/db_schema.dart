@@ -2,13 +2,16 @@ class DbSchema {
   const DbSchema._();
 
   static const String contactsTable = 'contacts';
+  static const String phoneNormColumn = 'phone_norm';
 
   // Keep schema definitions centralized so migrations stay manageable.
-  static const String createContactsTableSql = '''
+  static const String createContactsTableSql =
+      '''
 CREATE TABLE $contactsTable (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   phone TEXT,
+  $phoneNormColumn TEXT,
   email TEXT,
   company TEXT,
   notes TEXT,

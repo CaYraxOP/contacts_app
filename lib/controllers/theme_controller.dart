@@ -17,4 +17,3 @@ class ThemeController extends GetxController {
     }
   }
 }
-

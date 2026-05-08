@@ -21,4 +21,28 @@ class PhoneUtils {
     final onlyDigits = digits.replaceAll(RegExp(r'[^0-9]'), '');
     return onlyDigits.length >= 3;
   }
+
+  /// Normalizes a phone number for duplicate detection.
+  ///
+  /// Rules:
+  /// - removes spaces/dashes/extra symbols (keeps digits only)
+  /// - removes common country code prefix like +91 (India) when present
+  /// - if number is longer than 10 digits, uses the last 10 digits
+  static String normalizeForDuplicate(String input) {
+    final raw = input.trim();
+    if (raw.isEmpty) return '';
+
+    var digits = raw.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.isEmpty) return '';
+
+    digits = digits.replaceFirst(RegExp(r'^0+'), '');
+    if (digits.startsWith('91') && digits.length >= 12) {
+      digits = digits.substring(2);
+    }
+    if (digits.length > 10) {
+      digits = digits.substring(digits.length - 10);
+    }
+
+    return digits;
+  }
 }

@@ -7,4 +7,3 @@ class AppRadii {
   static const BorderRadius md = BorderRadius.all(Radius.circular(16));
   static const BorderRadius sm = BorderRadius.all(Radius.circular(12));
 }
-

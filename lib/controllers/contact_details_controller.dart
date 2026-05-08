@@ -7,7 +7,11 @@ import '../services/contacts_service.dart';
 import '../services/phone_dialer_service.dart';
 
 class ContactDetailsController extends GetxController {
-  ContactDetailsController(this._contactsController, this._service, this._dialer);
+  ContactDetailsController(
+    this._contactsController,
+    this._service,
+    this._dialer,
+  );
 
   final ContactsController _contactsController;
   final ContactsService _service;
@@ -17,6 +21,7 @@ class ContactDetailsController extends GetxController {
   final RxBool isLoading = false.obs;
 
   int? _id;
+  Worker? _contactsWorker;
 
   @override
   void onInit() {
@@ -25,10 +30,19 @@ class ContactDetailsController extends GetxController {
     _id = arg is int ? arg : null;
     _syncFromList();
 
-    ever<List<Contact>>(_contactsController.contacts, (_) => _syncFromList());
+    _contactsWorker = ever<List<Contact>>(
+      _contactsController.contacts,
+      (_) => _syncFromList(),
+    );
     if (_id != null && contact.value == null) {
       _loadFromDb();
     }
+  }
+
+  @override
+  void onClose() {
+    _contactsWorker?.dispose();
+    super.onClose();
   }
 
   void _syncFromList() {

@@ -17,4 +17,3 @@ class Responsive {
     return isTablet(context) ? tablet : mobile;
   }
 }
-

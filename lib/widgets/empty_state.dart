@@ -35,7 +35,9 @@ class EmptyState extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
           Text(
             title,
-            style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
             textAlign: TextAlign.center,
           ),
           if (subtitle != null) ...<Widget>[
@@ -62,7 +64,8 @@ class EmptyState extends StatelessWidget {
             tween: Tween<double>(begin: 0.96, end: 1),
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOutCubic,
-            builder: (context, t, child) => Transform.scale(scale: t, child: child),
+            builder: (context, t, child) =>
+                Transform.scale(scale: t, child: child),
             child: content,
           ),
         ),

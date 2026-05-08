@@ -9,10 +9,7 @@ class PhoneDialerService {
     final sanitized = PhoneUtils.sanitize(phoneNumber);
     if (!PhoneUtils.isProbablyValid(sanitized)) return false;
 
-    final Uri phoneUri = Uri(
-      scheme: 'tel',
-      path: sanitized,
-    );
+    final Uri phoneUri = Uri(scheme: 'tel', path: sanitized);
 
     // Some Android devices return null component for ACTION_VIEW tel: if there is
     // no dialer app, the dialer is disabled, or package-visibility queries are missing.

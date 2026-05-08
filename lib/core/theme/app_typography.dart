@@ -8,4 +8,3 @@ class AppTypography {
     return GoogleFonts.robotoTextTheme(base);
   }
 }
-

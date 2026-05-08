@@ -21,7 +21,9 @@ class _ContactsSearchBarState extends State<ContactsSearchBar> {
   void initState() {
     super.initState();
     contactsController = Get.find<ContactsController>();
-    textController = TextEditingController(text: contactsController.searchQuery.value);
+    textController = TextEditingController(
+      text: contactsController.searchQuery.value,
+    );
 
     textController.addListener(() {
       final next = textController.text;
@@ -65,7 +67,9 @@ class _ContactsSearchBarState extends State<ContactsSearchBar> {
         padding: const WidgetStatePropertyAll<EdgeInsets>(
           EdgeInsets.symmetric(horizontal: AppSpacing.sm),
         ),
-        backgroundColor: WidgetStatePropertyAll<Color>(theme.colorScheme.surfaceContainerHighest),
+        backgroundColor: WidgetStatePropertyAll<Color>(
+          theme.colorScheme.surfaceContainerHighest,
+        ),
         elevation: const WidgetStatePropertyAll<double>(0),
         trailing: <Widget>[
           AnimatedSwitcher(
