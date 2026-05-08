@@ -102,15 +102,6 @@ build/app/outputs/flutter-apk/
 - For best testing, use a real Android device.
 
 
-## Responsive Testing
-
-Device Preview is available for checking different screen sizes during development.
-
-```bash
-flutter run --dart-define=DEVICE_PREVIEW=true
-```
-
-Device Preview is disabled by default and is not shown in release APK builds.
 
 ## Deliverables Checklist
 
@@ -118,3 +109,4 @@ Device Preview is disabled by default and is not shown in release APK builds.
 - README documentation
 - APK file from `build/app/outputs/flutter-apk/`
 - Screenshots or a short video demo showing contacts, favorites, add/edit/delete, contact details, and calling
+
